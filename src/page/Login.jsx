@@ -6,29 +6,21 @@ import { auth } from "../firebase";
 // for pr
 // hii
 
-
-const handleLogin = async (e) => {
-  e.preventDefault();
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("Login Successful!");
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login Successful!");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -44,7 +36,6 @@ const Login = () => {
           Enter your credentials to continue
         </p>
 
-        {/* Email */}
         <div className="mb-5">
           <label className="block text-gray-700 mb-2 text-lg font-medium">
             Email
@@ -58,7 +49,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-6">
           <label className="block text-gray-700 mb-2 text-lg font-medium">
             Password
@@ -72,7 +62,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition text-lg"
@@ -80,7 +69,6 @@ const Login = () => {
           Login
         </button>
 
-        {/* Sign Up Link */}
         <p className="text-center text-gray-500 mt-5 text-sm">
           Don’t have an account?{" "}
           <span

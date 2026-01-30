@@ -2,23 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-const handleSignup = async (e) => {
-  e.preventDefault();
-
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
-
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    alert("Signup Successful!");
-    navigate("/");
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
 
 function Signup() {
   const navigate = useNavigate();
@@ -28,7 +11,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword) {
@@ -41,8 +24,13 @@ function Signup() {
       return;
     }
 
-    alert("Signup successful!");
-    navigate("/");
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Signup Successful!");
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -58,7 +46,6 @@ function Signup() {
           Create your account to get started
         </p>
 
-        {/* Name */}
         <div className="mb-4">
           <label className="block text-gray-700 mb-1 font-medium">
             Full Name
@@ -72,7 +59,6 @@ function Signup() {
           />
         </div>
 
-        {/* Email */}
         <div className="mb-4">
           <label className="block text-gray-700 mb-1 font-medium">
             Email
@@ -86,7 +72,6 @@ function Signup() {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-4">
           <label className="block text-gray-700 mb-1 font-medium">
             Password
@@ -100,7 +85,6 @@ function Signup() {
           />
         </div>
 
-        {/* Confirm Password */}
         <div className="mb-5">
           <label className="block text-gray-700 mb-1 font-medium">
             Confirm Password
